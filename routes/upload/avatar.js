@@ -22,7 +22,7 @@ let storage = multer.diskStorage({
     }
 });
 
-let upload = multer({storage}).single('file');
+let upload = multer({storage}).single('avatar');
 
 
 router.post("/", (req, res) => {
@@ -30,7 +30,7 @@ router.post("/", (req, res) => {
 
         //发生错误
         if (err instanceof multer.MulterError) {
-            res.send(500);
+            res.send(501);
         } else if (err) {
             res.send(500);
         } else {
@@ -46,7 +46,10 @@ router.post("/", (req, res) => {
             ).then(data => {
                 //需要更新session存储的数据
                 req.session.login.photo = "http://localhost:3000/images/upload/avatar/" + req.file.filename;
-                res.send("OK");
+                res.send({
+                    code: 0,
+                    msg: "头像上传成功",
+                });
             }).catch(() => {
                 res.sendStatus(500);
             });

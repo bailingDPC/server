@@ -7,10 +7,11 @@ let articleSchema = new Schema({
     type: {type: String, required: true},
     title: {type: String, required: true},
     content: {type: String, required: true},
+    contentHTML: {type: String, required: true},
     tag: {type: String, required: true},
     updateDate: {type: Date, default: Date.now},
     date: {type: Date, default: Date.now},
-    surface: {type: String, default: 'http://localhost:3000/images/defaultSurface.jpg'},
+    surface: {type: String, required: true },
     pv: {type: Number, default: 0},
     comment: [{type: Schema.Types.ObjectID, ref: "comment"}]
 });

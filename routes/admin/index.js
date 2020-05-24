@@ -21,4 +21,5 @@ router.use("/diary", require("./diary/index"));
 
 //友链接口
 router.use("/links", require("./links/index"));
+
 module.exports = router;

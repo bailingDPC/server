@@ -22,6 +22,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //允许跨域
@@ -42,6 +43,22 @@ app.use(function (req, res, next) {
 
 //设置session
 app.use(require("./middleware/session"));
+
+//设置中间件
+app.use((req, res, next) => {
+    console.log(req.url);
+    if (/^\/(admin)\/(login)/.test(req.url)) {
+        if(/\/(login)/.test(req.url)){
+            next();
+        }else if (req.session.login && req.session.login.admin) {
+            next();
+        } else {
+            res.redirect("/");
+        }
+    } else {
+        next();
+    }
+});
 
 //设置路由
 app.use('/', require('./routes/index'));
