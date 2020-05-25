@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2734a6c1"],{a70e:function(n,e,t){"use strict";t.r(e);var c=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("h1",[n._v("欢迎登陆后台管理系统")])},a=[],u={name:"AdminIndex"},i=u,r=(t("f563"),t("2877")),s=Object(r["a"])(i,c,a,!1,null,"645d4e50",null);e["default"]=s.exports},b188:function(n,e,t){},f563:function(n,e,t){"use strict";var c=t("b188"),a=t.n(c);a.a}}]);
-//# sourceMappingURL=chunk-2734a6c1.642bc103.js.map
