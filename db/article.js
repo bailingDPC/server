@@ -6,6 +6,7 @@ let Schema = mongoose.Schema;
 let articleSchema = new Schema({
     type: {type: String, required: true},
     title: {type: String, required: true},
+    description: {type: String, required: true},
     content: {type: String, required: true},
     contentHTML: {type: String, required: true},
     tag: {type: String, required: true},
@@ -67,5 +68,3 @@ let article = mongoose.model("article", articleSchema);
 
 
 module.exports = article;
-
-

@@ -24,7 +24,6 @@ let storage = multer.diskStorage({
 });
 let upload = multer({storage}).single("editormd-image-file");
 
-
 //文章图片上传
 router.post("/img", (req, res) => {
     upload(req, res, function(err){
@@ -50,8 +49,8 @@ router.post("/img", (req, res) => {
 //文章发表
 router.post("/add", (req, res) => {
     console.log(req.body);
-    let {type, title, tag, surface, content, contentHTML} = req.body;
-    if (!type || !title || !tag || !surface || !content || !contentHTML) {
+    let {type, title, tag, surface, description, content, contentHTML} = req.body;
+    if (!type || !title || !tag || !surface || !description || !content || !contentHTML ) {
         res.send({
             code: 1,
             msg: "数据不完整",
@@ -60,7 +59,7 @@ router.post("/add", (req, res) => {
     }
     /*连接数据库*/
     articleDB
-        .create({type, title, tag, surface, content, contentHTML})
+        .create({type, title, tag, surface, description, content, contentHTML})
         .then(() => {
             res.send({
                 code: 0,
@@ -79,7 +78,15 @@ router.post("/add", (req, res) => {
 router.get("/get", (req, res) => {
     let {skip, limit} = req.query;
 
-    articleDB.find({}, {}, {skip: Number(skip), limit: Number(limit)})
+    articleDB.find({}, {
+        _id: true,
+        title: true,
+        type: true,
+        tag: true,
+        surface: true,
+        date: true,
+        pv: true,
+    }, {skip: Number(skip), limit: Number(limit)})
         .then((data) => {
             res.send({
                 code: 0,
@@ -133,7 +140,7 @@ router.post("/delete", (req, res) => {
             });
         })
 });
-//文章信息获取
+//文章类型信息获取
 router.get("/getInfo", (req, res) => {
     articleInfoDB.findOne({})
         .then(data => {
@@ -151,5 +158,25 @@ router.get("/getInfo", (req, res) => {
         })
 });
 
+router.post("/getArticle", (req, res)=>{
+    let {_id} = req.body;
+    articleDB.findOne({_id}, {
+        contentHTML: false,
+    }, {})
+        .then((data) => {
+            res.send({
+                code: 0,
+                msg: "查找成功",
+                data
+            })
+        })
+        .catch(() => {
+            res.send({
+                code: 4,
+                msg: "服务器错误",
+                data: []
+            })
+        })
+});
 
 module.exports = router;
