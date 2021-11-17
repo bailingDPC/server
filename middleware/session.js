@@ -18,6 +18,7 @@ module.exports = session({
     cookie: {maxAge: 20 * 60 * 1000},//给前端设置cookie有效时长
     rolling: true,//每次用户和后端交互时（访问连接， ajax...) 刷新
     resave: false,//是否每次重新存储session
+    saveUninitialized: true,
     //将session存储到数据库
     store: new connectMongo({
         url: "mongodb://localhost:27017/blog"
